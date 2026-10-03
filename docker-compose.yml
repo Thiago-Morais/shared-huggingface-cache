@@ -1,0 +1,16 @@
+services:
+    huggingface-cache:
+        container_name: huggingface-cache
+        build:
+            context: build
+        volumes:
+            - huggingface-cache:/cache
+
+volumes:
+    huggingface-cache:
+        name: huggingface-cache
+        driver: local
+        driver_opts:
+            o: bind
+            type: none
+            device: ./huggingface
