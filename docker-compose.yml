@@ -1,16 +1,26 @@
 services:
-    huggingface-cache:
-        container_name: huggingface-cache
+    huggingface:
+        container_name: huggingface
+        env_file:
+            - .env
         build:
             context: build
+            dockerfile: Dockerfile.with-huggingface-cli
         volumes:
-            - huggingface-cache:/cache
+            - huggingface-home:${HF_HOME:-/cache/huggingface}
+
+        # huggingface-home:
+        #     container_name: huggingface-home
+        #     build:
+        #         context: build
+        #     volumes:
+        # - huggingface-home:${HF_HOME:-/cache/huggingface}
 
 volumes:
-    huggingface-cache:
-        name: huggingface-cache
+    huggingface-home:
+        name: huggingface-home
         driver: local
         driver_opts:
             o: bind
             type: none
-            device: ./huggingface
+            device: ${HF_MOUNT:-./huggingface}

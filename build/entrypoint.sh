@@ -1,7 +1,9 @@
 #!/bin/sh
-set -euo
+set -eu
 
-mkdir -p /cache/hub /cache/xet
-chmod -R 777 /cache
+CACHE_DIR=${HF_HOME:-/cache/huggingface}
+
+mkdir -p "$CACHE_DIR"/hub "$CACHE_DIR"/xet
+chmod -R 777 "$CACHE_DIR"
 
 exec "$@"
